@@ -24,7 +24,7 @@ function fetchBoards(boardState) {
                     boards.push(h2Text);
                 }
             });
-            chrome.runtime.sendMessage({ action: "showBoards", data: boards });
+            chrome.runtime.sendMessage({ action: "showBoards", boards: boards });
 
             initBoardsVisibility(boardState, boards)
         }
@@ -45,14 +45,12 @@ function initBoardsVisibility(boardState, allBoards) {
     var boardList = boardState.show;
 
     if(allBoards.length > 0) {
-        console.log("!boardList.length", !boardList.length)
         allBoards.forEach(function (board) {
             toggleBoardVisibility(board, !boardList.length)
         })
     }
 
     if (boardList.length > 0) {
-        console.log("boardList.length", boardList.length)
         boardList.forEach(function (board) {
             toggleBoardVisibility(board, true)
         })

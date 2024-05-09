@@ -42,8 +42,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-        if (request.action === 'showBoards' && request.hasOwnProperty('data')) {
-            createBoardsTable(request.data)
+        if (request.action === 'showBoards' && request.hasOwnProperty('boards')) {
+            var allBoards = DataStorage.getBoards();
+
+            if (allBoards.show.length < 1) {
+                request.boards.forEach(board => {
+                    DataStorage.addBoard(board);
+                })
+            }
+            createBoardsTable(request.boards)
         }
     });
 
