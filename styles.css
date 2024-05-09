@@ -1,0 +1,56 @@
+body {
+    width: 300px;
+}
+
+.brand-name {
+    border-bottom: 2px solid #110c0c;
+}
+
+#show-all-boards {
+    width: 100%;
+    padding: 10px;
+    font-weight: 700;
+}
+
+#tableContainer {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+th {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody {
+    border-top: 1px solid #ddd;
+}
+
+td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    font-weight: 700;
+}
+
+td label {
+    cursor: pointer;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #ddd;
+}
