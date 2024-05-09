@@ -7,6 +7,8 @@
 </head>
 
 <body>
+    <div id="toast-container" class="toast-container"></div>
+
     <div class="header">
         <h3 class="brand-name">
             <img src="./icons/icon16.png">
@@ -23,10 +25,21 @@
         </select>
         <button id="btn-delete-group">Delete</button>
     </div>
-    <div id="tableContainer"></div>
+    <div id="table-container"></div>
     <div id="add-group-form">
         <input id="group-name-input" placeholder="Enter the group name.">
         <button id="btn-save-group">Save</button>
+    </div>
+
+    <div id="confirmation-dialog">
+        <div id="overlay"></div>
+        <div id="dialog-box">
+            <p>Are you sure you want to delete the group?</p>
+            <div id="confirmation-dialog-actions">
+                <button id="confirm-button">Confirm</button>
+                <button id="cancel-button">Cancel</button>
+            </div>
+        </div>
     </div>
     <script src="popup.js"></script>
 </body>

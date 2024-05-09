@@ -42,9 +42,9 @@ function hideBoard(boardName) {
 }
 
 function initBoardsVisibility(boardState, allBoards) {
-    var boardList = boardState.show;
+    var boardList = boardState;
 
-    if(allBoards.length > 0) {
+    if (allBoards.length > 0) {
         allBoards.forEach(function (board) {
             toggleBoardVisibility(board, !boardList.length)
         })
