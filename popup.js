@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-
     var DataStorage = {
         storage: localStorage,
-        base_key: 'trello_enhanced_',
+        base_key: "trello_enhanced_",
         key: function (key) {
-            return this.base_key + key
+            return this.base_key + key;
         },
         set: function (key, value) {
             this.storage.setItem(this.key(key), JSON.stringify(value));
@@ -17,90 +16,119 @@ document.addEventListener("DOMContentLoaded", function () {
             this.storage.removeItem(this.key(key));
         },
         getBoards: function () {
-            return this.get('boards') || { show: [] }
+            return this.get("boards") || { show: [] };
         },
         addBoard: function (board) {
             var existingBoardData = this.getBoards();
             existingBoardData.show.push(board);
-            this.set('boards', existingBoardData)
+            this.set("boards", existingBoardData);
         },
         removeBoard: function (board) {
             var existingBoardData = this.getBoards();
             var indexToRemove = existingBoardData.show.indexOf(board);
             if (indexToRemove !== -1) {
                 existingBoardData.show.splice(indexToRemove, 1);
-                this.set('boards', existingBoardData)
+                this.set("boards", existingBoardData);
             }
-        }
+        },
     };
 
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {
-            action: "fetchBoards",
-            state: DataStorage.getBoards()
-        });
-    });
-
-    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-        if (request.action === 'showBoards' && request.hasOwnProperty('boards')) {
-            var allBoards = DataStorage.getBoards();
-
-            if (allBoards.show.length < 1) {
-                request.boards.forEach(board => {
-                    DataStorage.addBoard(board);
-                })
-            }
-            createBoardsTable(request.boards)
-        }
-    });
-
-    document.getElementById('show-all-boards').addEventListener('click', function() {
-        DataStorage.remove('boards');
+    if (
+        typeof chrome !== "undefined" &&
+        chrome.hasOwnProperty("tabs") &&
+        chrome.tabs
+    ) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {
-                action: "showAllBoards",
-                state: DataStorage.getBoards()
+                action: "fetchBoards",
+                state: DataStorage.getBoards(),
             });
         });
-    });
 
-    function resolveBoardId(board) {
-        return board.toLowerCase().replace(/\s+/g, '_');
+        chrome.runtime.onMessage.addListener(function (
+            request,
+            sender,
+            sendResponse
+        ) {
+            if (request.action === "showBoards" && request.hasOwnProperty("boards")) {
+                var allBoards = DataStorage.getBoards();
+
+                if (allBoards.show.length < 1) {
+                    request.boards.forEach((board) => {
+                        DataStorage.addBoard(board);
+                    });
+                }
+                createBoardsTable(request.boards);
+            }
+        });
+    } else {
+        console.error("chrome or chrome.tabs is not defined.");
     }
 
-    function createBoardsTable(boards)
-    {
+    document
+        .getElementById("show-all-boards")
+        .addEventListener("click", function () {
+            DataStorage.remove("boards");
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    action: "showAllBoards",
+                    state: DataStorage.getBoards(),
+                });
+            });
+        });
+
+    document
+        .getElementById("add-group")
+        .addEventListener("click", function (event) {
+            event.preventDefault();
+            var addGroupForm = document.getElementById("add-group-form");
+            if (
+                addGroupForm.style.display === "none" ||
+                addGroupForm.style.display === ""
+            ) {
+                addGroupForm.style.display = "flex";
+            } else {
+                addGroupForm.style.display = "none";
+            }
+        });
+
+    function resolveBoardId(board) {
+        return board.toLowerCase().replace(/\s+/g, "_");
+    }
+
+    function createBoardsTable(boards) {
         var initialState = DataStorage.getBoards();
 
-        var table = document.createElement('table');
-        var thead = document.createElement('thead');
-        var tbody = document.createElement('tbody');
-        var headerRow = document.createElement('tr');
-        var boardHeader = document.createElement('th');
-        var actionsHeader = document.createElement('th');
-        boardHeader.textContent = 'Board';
-        actionsHeader.textContent = 'Actions';
+        var table = document.createElement("table");
+        var thead = document.createElement("thead");
+        var tbody = document.createElement("tbody");
+        var headerRow = document.createElement("tr");
+        var boardHeader = document.createElement("th");
+        var actionsHeader = document.createElement("th");
+        boardHeader.textContent = "Board";
+        actionsHeader.textContent = "Actions";
         headerRow.appendChild(boardHeader);
         headerRow.appendChild(actionsHeader);
         thead.appendChild(headerRow);
         table.appendChild(thead);
 
-        boards.forEach(board => {
-            var row = document.createElement('tr');
-            var boardCell = document.createElement('td');
-            var actionsCell = document.createElement('td');
+        boards.forEach((board) => {
+            var row = document.createElement("tr");
+            var boardCell = document.createElement("td");
+            var actionsCell = document.createElement("td");
 
-            var boardId = 'checkbox_' + resolveBoardId(board)
+            var boardId = "checkbox_" + resolveBoardId(board);
 
-            var label = document.createElement('label');
+            var label = document.createElement("label");
             label.textContent = board;
-            label.setAttribute('for', boardId);
+            label.setAttribute("for", boardId);
 
-            var checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
             checkbox.id = boardId;
-            checkbox.checked = initialState.show.length > 0 ? initialState.show.includes(board) : true;
-            checkbox.setAttribute('data-board', board);
+            checkbox.checked =
+                initialState.show.length > 0 ? initialState.show.includes(board) : true;
+            checkbox.setAttribute("data-board", board);
 
             boardCell.appendChild(label);
             actionsCell.appendChild(checkbox);
@@ -108,28 +136,33 @@ document.addEventListener("DOMContentLoaded", function () {
             row.appendChild(actionsCell);
             tbody.appendChild(row);
 
-            checkbox.addEventListener('change', toggleBoardVisibility);
+            checkbox.addEventListener("change", toggleBoardVisibility);
         });
 
         table.appendChild(tbody);
-        document.getElementById('tableContainer').innerHTML = ''
-        document.getElementById('tableContainer').appendChild(table);
+        document.getElementById("tableContainer").innerHTML = "";
+        document.getElementById("tableContainer").appendChild(table);
     }
 
     function toggleBoardVisibility() {
-        var boardName = this.getAttribute('data-board');
+        var boardName = this.getAttribute("data-board");
 
         if (this.checked) {
             DataStorage.addBoard(boardName);
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { action: "showBoard", name: boardName });
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    action: "showBoard",
+                    name: boardName,
+                });
             });
         } else {
             DataStorage.removeBoard(boardName);
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { action: "hideBoard", name: boardName });
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    action: "hideBoard",
+                    name: boardName,
+                });
             });
         }
     }
-
 });

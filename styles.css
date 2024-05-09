@@ -2,8 +2,28 @@ body {
     width: 300px;
 }
 
-.brand-name {
+.header {
+    display: flex;
+    align-items: center;
+    height: 20px;
     border-bottom: 2px solid #110c0c;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+}
+
+.brand-name {
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+}
+
+.brand-name .enhanced {
+    color: green;
+    margin-left: 5px;
+}
+
+.enhanced::first-letter {
+    font-weight: bold;
 }
 
 #show-all-boards {
@@ -12,9 +32,15 @@ body {
     font-weight: 700;
 }
 
+#btn-save-group {
+    font-weight: 700;
+}
+
 #tableContainer {
     margin-top: 10px;
     margin-bottom: 10px;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 table {
@@ -53,4 +79,55 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
     background-color: #ddd;
+}
+
+thead th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 2px solid #000;
+    border-bottom: 2px solid #000;
+}
+
+thead th:first-child {
+    border-top-left-radius: 5px;
+}
+
+thead th:last-child {
+    border-top-right-radius: 5px;
+}
+
+#add-group-form {
+    display: flex;
+    align-items: center;
+    display: none;
+}
+
+#group-name-input {
+    width: 80%;
+    margin-right: 10px;
+    padding: 8px;
+}
+
+#btn-save-group {
+    flex-grow: 1;
+    padding: 8px;
+}
+
+#filter-group {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#group-list {
+    width: 80%;
+    margin-right: 10px;
+    padding: 8px;
+}
+
+#btn-delete-group {
+    flex-grow: 1;
+    padding: 8px;
 }
