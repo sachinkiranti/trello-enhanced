@@ -22,12 +22,19 @@
         <select id="group-list">
             <option selected disabled>Select Group</option>
         </select>
-        <button id="btn-delete-group">Delete</button>
+        <button id="btn-delete-group" class="btn-circle btn-delete" title="Delete">
+            <img src="./icons/trash.png" alt="">
+        </button>
     </div>
     <div id="table-container"></div>
     <div id="add-group-form">
         <input id="group-name-input" placeholder="Enter the group name.">
-        <button id="btn-save-group">Save</button>
+        <button id="btn-save-group" class="btn-circle btn-save" title="Save">
+            <img src="./icons/save.png">
+        </button>
+        <button id="btn-cancel-group" class="btn-circle btn-cancel" title="Cancel">
+            <img src="./icons/cancel.png">
+        </button>
     </div>
 
     <div id="confirmation-dialog">
@@ -35,8 +42,8 @@
         <div id="dialog-box">
             <p>Are you sure you want to delete the group?</p>
             <div id="confirmation-dialog-actions">
-                <button id="confirm-button">Confirm</button>
-                <button id="cancel-button">Cancel</button>
+                <button id="confirm-button" class="btn-confirm">Confirm</button>
+                <button id="cancel-button" class="btn-cancel">Cancel</button>
             </div>
         </div>
     </div>

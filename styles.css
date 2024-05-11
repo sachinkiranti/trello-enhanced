@@ -99,14 +99,14 @@ thead th:last-child {
 }
 
 #group-name-input {
-    width: 80%;
-    margin-right: 10px;
+    width: 90%;
+    margin-right: 5px;
     padding: 8px;
 }
 
 #btn-save-group {
-    flex-grow: 1;
     padding: 8px;
+    margin-right: 5px;
 }
 
 #filter-group {
@@ -116,13 +116,8 @@ thead th:last-child {
 }
 
 #group-list {
-    width: 80%;
-    margin-right: 10px;
-    padding: 8px;
-}
-
-#btn-delete-group {
-    flex-grow: 1;
+    width: 90%;
+    margin-right: 5px;
     padding: 8px;
 }
 
@@ -219,4 +214,59 @@ thead th:last-child {
     background: #d81a1a;
     color: #fff;
     border-color: #d81a1a;
+}
+
+.btn-cancel,
+.btn-save,
+.btn-delete {
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: #d4d5d3;
+    cursor: pointer;
+}
+
+.btn-circle img {
+    height: 13px;
+}
+
+.btn-cancel {
+    padding: 8px;
+}
+
+.btn-save {
+    background: #99f382;
+}
+
+.btn-delete {
+    background: #ffacac;
+}
+
+.btn-cancel:hover {
+    background-color: #f0f0f0;
+    border-color: #ccc;
+}
+
+.btn-save:hover {
+    background-color: #88d174;
+    border-color: #6cb75c;
+}
+
+.btn-delete:hover {
+    background-color: #f07575;
+    border-color: #c94c4c;
+}
+
+#confirm-button:hover {
+    background-color: #f07575;
+    border-color: #c94c4c;
+    color: #000000;
+    cursor: pointer;
 }
