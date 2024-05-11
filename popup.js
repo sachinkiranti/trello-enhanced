@@ -110,18 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document
-        .getElementById("show-all-boards")
-        .addEventListener("click", function () {
-            DataStorage.remove("boards");
-            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, {
-                    action: "showAllBoards",
-                    state: DataStorage.getBoards(),
-                });
-            });
-        });
-
-    document
         .getElementById("add-group")
         .addEventListener("click", function (event) {
             event.preventDefault();
