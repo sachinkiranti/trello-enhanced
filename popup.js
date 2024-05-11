@@ -210,6 +210,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             var selectedValue = selectedOption.value;
 
+            DataStorage.removeGroup(DataStorage.getDefaultGroup())
+
             DataStorage.remove(DataStorage.getDefaultGroup())
             DataStorage.removeDefaultGroup()
 
