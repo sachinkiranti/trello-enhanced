@@ -5,8 +5,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         showBoard(request.name);
     } else if (request.action === "hideBoard" && request.hasOwnProperty("name")) {
         hideBoard(request.name);
-    } else if (request.action === 'showAllBoards') {
-        fetchBoards(request.state);
     }
 });
 

@@ -61,8 +61,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 this.set("groups", existingGroups);
             }
         },
-        getDefaultGroup: function () {
-            return str_format(this.get('default_group') || 'boards');
+        getDefaultGroup: function (removeFormat) {
+            return !removeFormat ? str_format(this.get('default_group') || 'boards') : (this.get('default_group') || 'boards');
         },
         setDefaultGroup: function (group) {
             this.set('default_group', group);
@@ -98,10 +98,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 }
 
-                var defaultSelectedGroup = document
-                    .getElementById("group-name-input").value || DataStorage.getDefaultGroup()
+                var groupInputEl = document.getElementById("group-name-input");
 
-                createGroupsOption(defaultSelectedGroup)
+                if (!groupInputEl.value) {
+                    groupInputEl.value = DataStorage.getDefaultGroup(true)
+                }
+
+                createGroupsOption(groupInputEl.value)
                 createBoardsTable(request.boards);
             }
         });
